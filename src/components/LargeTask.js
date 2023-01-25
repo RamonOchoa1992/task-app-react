@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import vector from "../img/Vector.png";
 import DisabledButttons from "./DisabledButttons";
 import EnableButtons from "./EnableButtons";
+import avatarDis from "../img/avatarDis.png";
+import SmallEnableButtons from "./SmallEnableButton";
+import SmallDisabledButttons from "./SmallDisableButtons";
 
 const initialData = {
   description: "",
 };
 
-const LargeTask = ({ setSmallState, createTask }) => {
+const LargeTask = ({ setSmallState, createTask, el, updateTask }) => {
+  const { id, description } = el;
   const [data, setData] = useState(initialData);
   const [add, setAdd] = useState(false);
+  const [valueText, setValueText] = useState(description)
+  const [isSmall, setIsSmall] = useState(window.innerWidth < 1230);
 
   useEffect(() => {
     if (data.description.length === 0) {
@@ -18,12 +24,25 @@ const LargeTask = ({ setSmallState, createTask }) => {
       setAdd(true);
     }
   }, [data]);
+  const handleResize = () => {
+    if (window.innerWidth < 1230) {
+      setIsSmall(true)
+    }
+    else {
+      setIsSmall(false)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize, false);
+  }, [])
 
   const handleChange = (e) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
     });
+    setValueText(e.target.value)
   };
 
   return (
@@ -38,7 +57,11 @@ const LargeTask = ({ setSmallState, createTask }) => {
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
-          <img src={vector} alt="vector" />
+          {description
+            ? (<input
+              type="checkbox" disabled
+            />)
+            : (<img src={vector} alt="vector" />)}
           <input
             style={{
               marginLeft: ".3rem",
@@ -46,27 +69,38 @@ const LargeTask = ({ setSmallState, createTask }) => {
               outline: "transparent",
               borderColor: "transparent",
               padding: ".2rem .2rem",
-              width: "100%",
+              width: "95%",
             }}
             type="text"
             name="description"
             id="description"
-            value={data.description}
+            value={valueText}
             placeholder="Type to add new task"
             autoFocus
             onChange={handleChange}
           />
+          <img style={add ? { opacity: "100%" } : { opacity: "70%" }} src={avatarDis} alt="avatar" />
         </div>
       </div>
-      {add ? (
+      {add && !isSmall ? (
         <EnableButtons
           data={data}
           createTask={createTask}
           setSmallState={setSmallState}
+          id={id}
+          updateTask={updateTask}
         />
-      ) : (
-        <DisabledButttons setSmallState={setSmallState} />
-      )}
+      ) : add && isSmall
+        ? <SmallEnableButtons data={data}
+          createTask={createTask}
+          setSmallState={setSmallState}
+          id={id}
+          updateTask={updateTask} />
+        : !add && isSmall
+          ? <SmallDisabledButttons setSmallState={setSmallState} />
+          : (
+            <DisabledButttons setSmallState={setSmallState} />
+          )}
     </>
   );
 };

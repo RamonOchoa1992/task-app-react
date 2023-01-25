@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/*import React, { useState, useEffect } from "react";
+import NewTask from "./NewTask";
 
 const Task = ({ el, deleteTask }) => {
   const { id, description } = el;
@@ -24,3 +25,4 @@ const Task = ({ el, deleteTask }) => {
 };
 
 export default Task;
+*/

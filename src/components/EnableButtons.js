@@ -6,13 +6,17 @@ import openEnab from "../img/openEnab.png";
 import publicEnab from "../img/publicEnab.png";
 import todayEnab from "../img/todayEnab.png";
 
-const EnableButtons = ({ setSmallState, data, createTask }) => {
+const EnableButtons = ({ setSmallState, data, createTask, id, updateTask }) => {
   const handleClick = () => {
     setSmallState(true);
   };
 
   const handleAddClick = () => {
-    createTask(data);
+    if (!id) {
+      createTask(data);
+    } else {
+      updateTask({ ...data, id })
+    }
     setSmallState(true);
   };
 
@@ -44,7 +48,7 @@ const EnableButtons = ({ setSmallState, data, createTask }) => {
           Cancel
         </Button>
         <Button style={buttonStyle} variant="primary" onClick={handleAddClick}>
-          Add
+          {id ? "Update" : "Add"}
         </Button>
       </div>
     </div>

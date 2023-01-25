@@ -22,7 +22,8 @@ body {
 }
 
 .container {
-  height: 90vh;
+  height: 100vh;
+  padding: 4rem 2rem;
 }
 
 h1 {
@@ -31,32 +32,41 @@ h1 {
   border-bottom: 1px solid rgb(3, 53, 93);
 }
 
-section,
-article {
+section {
   margin-top: 1rem;
   font-size: 1.1rem;
-}
-
-section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
 article {
-  padding: 0 0.2rem;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-wrap: wrap;
+  margin: .5rem 0;
 }
 
-article input {
-  margin-right: 1rem;
+input[type="checkbox"] {
+  margin-right: .4rem;
+  margin-left: .25rem;
   transform: scale(1.7);
 }
 
-.disableB img,
+.disableB img {
+  margin: 0.2rem;
+}
+
 .enabableB img {
   cursor: pointer;
   margin: 0.2rem;
+}
+
+.disableBSmall img {
+  margin: .5rem 1rem;
+  opacity: 50%;
+}
+
+.enableBSmall img {
+  margin: .5rem 1rem;
+  cursor: pointer;
 }
