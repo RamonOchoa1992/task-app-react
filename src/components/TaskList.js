@@ -14,6 +14,7 @@ const TaskList = () => {
   const [loadingAdd, setLoadingAdd] = useState(false);
   const [loadingDel, setLoadingDel] = useState(false);
   const [loadingUpd, setLoadingUpd] = useState(false);
+  const [abort, setAbort] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -21,8 +22,13 @@ const TaskList = () => {
       .get(url)
       .then((res) => {
         if (!res.err) {
-          setDB(res);
-          setError(null);
+          if (res.length === undefined) {
+            setAbort(true);
+          } else {
+            setAbort(false);
+            setDB(res);
+            setError(null);
+          }
         } else {
           setDB(null);
           setError(res);
@@ -147,7 +153,7 @@ const TaskList = () => {
           </div>
         </Modal>
       )}
-      {db && (
+      {db && !abort && (
         <NewTask
           createTask={createTask}
           el={[]}
@@ -155,22 +161,22 @@ const TaskList = () => {
           updateTask={updateTask}
         />
       )}
+      {abort && !loading && (
+        <Mensaje
+          content={
+            "Hola team. Deben conectarse a través de una VPN, ya que los datos están siendo consumidos mediante un hosting en Railway. Disculpas por las molestias. 😁"
+          }
+        />
+      )}
       {db &&
         !loading &&
-        (db.length >= 0 ? (
-          db.map((el) => (
-            <NewTask
-              key={el.id}
-              el={el}
-              deleteTask={deleteTask}
-              updateTask={updateTask}
-            />
-          ))
-        ) : (
-          <Mensaje
-            content={
-              "Hola team. Deben conectarse a través de una VPN, ya que los datos están siendo consumidos mediante un hosting en Railway. Disculpas por las molestias. 😁"
-            }
+        db.length >= 0 &&
+        db.map((el) => (
+          <NewTask
+            key={el.id}
+            el={el}
+            deleteTask={deleteTask}
+            updateTask={updateTask}
           />
         ))}
     </section>

@@ -41,14 +41,20 @@ section {
 }
 
 article {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
+}
+
+article > div,
+article > div > input[type="text"] {
+  width: 100%;
 }
 
 input[type="checkbox"] {
-  margin-right: .4rem;
-  margin-left: .25rem;
+  margin-right: 0.4rem;
+  margin-left: 0.25rem;
   transform: scale(1.7);
 }
 
@@ -62,11 +68,11 @@ input[type="checkbox"] {
 }
 
 .disableBSmall img {
-  margin: .5rem 1rem;
+  margin: 0.5rem 1rem;
   opacity: 50%;
 }
 
 .enableBSmall img {
-  margin: .5rem 1rem;
+  margin: 0.5rem 1rem;
   cursor: pointer;
 }
