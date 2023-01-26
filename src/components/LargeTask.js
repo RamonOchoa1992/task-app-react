@@ -14,8 +14,10 @@ const LargeTask = ({ setSmallState, createTask, el, updateTask }) => {
   const { id, description } = el;
   const [data, setData] = useState(initialData);
   const [add, setAdd] = useState(false);
-  const [valueText, setValueText] = useState(description)
-  const [isSmall, setIsSmall] = useState(window.innerWidth < 1230);
+  const [valueText, setValueText] = useState(description);
+  const [isSmall, setIsSmall] = useState(window.innerWidth < 1318);
+
+  /* Inicialmente el ancho límite de la ventana para cambiar la UI era de 1230. Hice un ligero cambio a 1318. Saludos. */
 
   useEffect(() => {
     if (data.description.length === 0) {
@@ -25,24 +27,23 @@ const LargeTask = ({ setSmallState, createTask, el, updateTask }) => {
     }
   }, [data]);
   const handleResize = () => {
-    if (window.innerWidth < 1230) {
-      setIsSmall(true)
+    if (window.innerWidth < 1318) {
+      setIsSmall(true);
+    } else {
+      setIsSmall(false);
     }
-    else {
-      setIsSmall(false)
-    }
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleResize, false);
-  }, [])
+  }, []);
 
   const handleChange = (e) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
     });
-    setValueText(e.target.value)
+    setValueText(e.target.value);
   };
 
   return (
@@ -57,11 +58,11 @@ const LargeTask = ({ setSmallState, createTask, el, updateTask }) => {
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
-          {description
-            ? (<input
-              type="checkbox" disabled
-            />)
-            : (<img src={vector} alt="vector" />)}
+          {description ? (
+            <input type="checkbox" disabled />
+          ) : (
+            <img src={vector} alt="vector" />
+          )}
           <input
             style={{
               marginLeft: ".3rem",
@@ -79,7 +80,15 @@ const LargeTask = ({ setSmallState, createTask, el, updateTask }) => {
             autoFocus
             onChange={handleChange}
           />
-          <img style={add ? { opacity: "100%" } : { opacity: "70%" }} src={avatarDis} alt="avatar" />
+          <img
+            style={
+              add
+                ? { opacity: "100%", marginRight: ".3rem" }
+                : { opacity: "70%", marginRight: ".3rem" }
+            }
+            src={avatarDis}
+            alt="avatar"
+          />
         </div>
       </div>
       {add && !isSmall ? (
@@ -90,17 +99,19 @@ const LargeTask = ({ setSmallState, createTask, el, updateTask }) => {
           id={id}
           updateTask={updateTask}
         />
-      ) : add && isSmall
-        ? <SmallEnableButtons data={data}
+      ) : add && isSmall ? (
+        <SmallEnableButtons
+          data={data}
           createTask={createTask}
           setSmallState={setSmallState}
           id={id}
-          updateTask={updateTask} />
-        : !add && isSmall
-          ? <SmallDisabledButttons setSmallState={setSmallState} />
-          : (
-            <DisabledButttons setSmallState={setSmallState} />
-          )}
+          updateTask={updateTask}
+        />
+      ) : !add && isSmall ? (
+        <SmallDisabledButttons setSmallState={setSmallState} />
+      ) : (
+        <DisabledButttons setSmallState={setSmallState} />
+      )}
     </>
   );
 };

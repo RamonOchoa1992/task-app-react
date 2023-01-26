@@ -15,7 +15,7 @@ const EnableButtons = ({ setSmallState, data, createTask, id, updateTask }) => {
     if (!id) {
       createTask(data);
     } else {
-      updateTask({ ...data, id })
+      updateTask({ ...data, id });
     }
     setSmallState(true);
   };
@@ -36,12 +36,16 @@ const EnableButtons = ({ setSmallState, data, createTask, id, updateTask }) => {
         justifyContent: "space-between",
       }}
     >
-      <div className="enabableB">
-        <img src={openEnab} alt="open" />
-        <img src={todayEnab} alt="today" />
-        <img src={publicEnab} alt="public" />
-        <img src={highlightEnab} alt="highliht" />
-        <img src={estimationEnab} alt="estimation" />
+      <div style={{ display: "flex" }} className="enabableB">
+        <div>
+          <img src={openEnab} alt="open" />
+        </div>
+        <div style={{ marginLeft: "2rem" }}>
+          <img src={todayEnab} alt="today" />
+          <img src={publicEnab} alt="public" />
+          <img src={highlightEnab} alt="highliht" />
+          <img src={estimationEnab} alt="estimation" />
+        </div>
       </div>
       <div>
         <Button style={buttonStyle} variant="light" onClick={handleClick}>

@@ -27,12 +27,16 @@ const DisabledButttons = ({ setSmallState }) => {
         justifyContent: "space-between",
       }}
     >
-      <div className="disableB">
-        <img src={openDis} alt="open" />
-        <img src={todayDis} alt="today" />
-        <img src={publicDis} alt="public" />
-        <img src={highlightDis} alt="highliht" />
-        <img src={estimationDis} alt="estimation" />
+      <div style={{ display: "flex" }} className="disableB">
+        <div>
+          <img src={openDis} alt="open" />
+        </div>
+        <div style={{ marginLeft: "2rem" }}>
+          <img src={todayDis} alt="today" />
+          <img src={publicDis} alt="public" />
+          <img src={highlightDis} alt="highliht" />
+          <img src={estimationDis} alt="estimation" />
+        </div>
       </div>
       <div>
         <Button style={buttonStyle} variant="light" onClick={handleClick}>

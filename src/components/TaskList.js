@@ -70,7 +70,7 @@ const TaskList = () => {
   };
 
   const updateTask = (data) => {
-    const { id, description } = data
+    const { id, description } = data;
     const endpoint = `${url}/${id}`;
     const options = {
       body: { description },
@@ -81,7 +81,7 @@ const TaskList = () => {
       .put(endpoint, options)
       .then((res) => {
         if (!res.err) {
-          const newData = db.map((el) => el.id === id ? data : el);
+          const newData = db.map((el) => (el.id === id ? data : el));
           setDB(newData);
           setError(null);
         } else {
@@ -90,41 +90,87 @@ const TaskList = () => {
         }
         setLoadingUpd(false);
       });
-  }
+  };
 
   return (
     <section>
       {error && <Mensaje content={"El endpoint consumido no se encuentra"} />}
       {loading && <Loading />}
-      {loadingAdd && <Modal backColor={"rgba(0, 0, 0, 0.75)"}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <h3>Adding Task!</h3>
-          <div style={{ marginLeft: "6rem" }}><LoadingAdd /></div>
-        </div>
-      </Modal>}
-      {loadingDel && <Modal backColor={"rgba(0, 0, 0, 0.75)"}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <h3>Well Done!</h3>
-          <div style={{ marginLeft: "6rem" }}><LoadingAdd /></div>
-        </div>
-      </Modal>}
-      {loadingUpd && <Modal backColor={"rgba(0, 0, 0, 0.75)"}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <h3>Updating Task!</h3>
-          <div style={{ marginLeft: "6rem" }}><LoadingAdd /></div>
-        </div>
-      </Modal>}
-      {db && <NewTask createTask={createTask} el={[]} deleteTask={deleteTask} updateTask={updateTask} />}
+      {loadingAdd && (
+        <Modal backColor={"rgba(0, 0, 0, 0.75)"}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <h3>Adding Task!</h3>
+            <div style={{ marginLeft: "6rem" }}>
+              <LoadingAdd />
+            </div>
+          </div>
+        </Modal>
+      )}
+      {loadingDel && (
+        <Modal backColor={"rgba(0, 0, 0, 0.75)"}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <h3>Well Done!</h3>
+            <div style={{ marginLeft: "6rem" }}>
+              <LoadingAdd />
+            </div>
+          </div>
+        </Modal>
+      )}
+      {loadingUpd && (
+        <Modal backColor={"rgba(0, 0, 0, 0.75)"}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <h3>Updating Task!</h3>
+            <div style={{ marginLeft: "6rem" }}>
+              <LoadingAdd />
+            </div>
+          </div>
+        </Modal>
+      )}
+      {db && (
+        <NewTask
+          createTask={createTask}
+          el={[]}
+          deleteTask={deleteTask}
+          updateTask={updateTask}
+        />
+      )}
       {db &&
         !loading &&
         (db.length >= 0 ? (
-          db.map((el) => <NewTask key={el.id} el={el} deleteTask={deleteTask} updateTask={updateTask} />)
+          db.map((el) => (
+            <NewTask
+              key={el.id}
+              el={el}
+              deleteTask={deleteTask}
+              updateTask={updateTask}
+            />
+          ))
         ) : (
           <Mensaje
-            /*content={
+            content={
               "Hola team. Deben conectarse a través de una VPN, ya que los datos están siendo consumidos mediante un hosting en Railway. Disculpas por las molestias. 😁"
-            }*/
-            content={"No existen tareas a mostrar"}
+            }
           />
         ))}
     </section>
